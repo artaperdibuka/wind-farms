@@ -305,7 +305,6 @@ html, body, #root {
 @media (max-width: 1024px) {
   /* iPad dhe tabletë të vegjël */
   .farm-form {
-<<<<<<< HEAD
     gap: 12px;
     padding: 18px;
   }
