@@ -33,29 +33,35 @@ const MapView = () => {
   };
 
   // VETËM NJË useEffect - hiq të dytën!
-  useEffect(() => {
-    const fetchFarms = async () => {
-      try {
-        console.log("🔄 Duke marrë fermat nga API...");
-        const res = await axios.get(`${API_BASE_URL}/api/farms`);
-
-        console.log("✅ Fermat e marra:", res.data.length);
-
-        // SHFAQ ID-TË E VËRTETA
-        console.log("🆔 ID-të e para nga API:");
+useEffect(() => {
+  const fetchFarms = async () => {
+    try {
+      console.log("🔄 Duke marrë fermat nga API...");
+      const res = await axios.get(`${API_BASE_URL}/api/farms`);
+      
+      console.log("✅ Fermat e marra:", res.data.length);
+      
+      // DEBUG I KORRIGJUAR:
+      console.log("🆔 ID-të e para nga API:");
+      if (Array.isArray(res.data) && res.data.length > 0) {
         res.data.slice(0, 5).forEach((farm, index) => {
           console.log(`${index + 1}. ${farm._id} - ${farm.name}`);
         });
-
-        setFarms(res.data);
-      } catch (err) {
-        console.error("Gabim gjatë marrjes së fermave:", err);
-      } finally {
-        setLoading(false);
+      } else {
+        console.log("❌ res.data nuk është array:", typeof res.data);
+        console.log("res.data:", res.data);
       }
-    };
-    fetchFarms();
-  }, []); // VETËM NJË HERË!
+      
+      setFarms(res.data);
+    } catch (err) {
+      console.error("Gabim gjatë marrjes së fermave:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  fetchFarms();
+}, []);
+    // VETËM NJË HERË!
 
   if (loading)
     return <div className="loading-text">Po ngarkohen fermat...</div>;
