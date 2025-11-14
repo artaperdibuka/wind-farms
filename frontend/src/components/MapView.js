@@ -32,44 +32,41 @@ const MapView = () => {
     return countryToEnglish[name] || name;
   };
 
-  // VETËM NJË useEffect - hiq të dytën!
-useEffect(() => {
-  const fetchFarms = async () => {
-    try {
-      console.log("🔄 Duke marrë fermat nga API...");
-      const res = await axios.get(`${API_BASE_URL}/api/farms`);
-      
-      console.log("✅ Fermat e marra:", res.data.length);
-      
-      // DEBUG I KORRIGJUAR:
-      console.log("🆔 ID-të e para nga API:");
-      if (Array.isArray(res.data) && res.data.length > 0) {
-        res.data.slice(0, 5).forEach((farm, index) => {
-          console.log(`${index + 1}. ${farm._id} - ${farm.name}`);
-        });
-      } else {
-        console.log("❌ res.data nuk është array:", typeof res.data);
-        console.log("res.data:", res.data);
+  useEffect(() => {
+    const fetchFarms = async () => {
+      try {
+        console.log("🔄 Duke marrë fermat nga API...");
+        const apiUrl = `${API_BASE_URL}/api/farms`;
+        console.log("🌐 URL e përdorur:", apiUrl);
+        
+        const res = await axios.get(apiUrl);
+        console.log("📊 Response data type:", typeof res.data);
+        
+        // KONTROLLO NËSE ËSHTË ARRAY PARA SE TË VË NË STATE
+        if (Array.isArray(res.data)) {
+          console.log("✅ Fermat e marra:", res.data.length);
+          setFarms(res.data);
+        } else {
+          console.error("❌ Response nuk është array:", res.data);
+          setFarms([]); // Vendos array bosh nëse nuk është array
+        }
+      } catch (err) {
+        console.error("❌ Gabim gjatë marrjes së fermave:", err);
+        setFarms([]); // Vendos array bosh në rast errori
+      } finally {
+        setLoading(false);
       }
-      
-      setFarms(res.data);
-    } catch (err) {
-      console.error("Gabim gjatë marrjes së fermave:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-  fetchFarms();
-}, []);
-    // VETËM NJË HERË!
+    };
+    fetchFarms();
+  }, []);
 
-  if (loading)
-    return <div className="loading-text">Po ngarkohen fermat...</div>;
+  if (loading) return <div className="loading-text">Po ngarkohen fermat...</div>;
 
   const deleteFarm = async (id) => {
     if (!window.confirm("A je i sigurt që do të fshish këtë fermë?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/farms/${id}`);
+      // ✅ KORREKT - përdor API_BASE_URL
+      await axios.delete(`${API_BASE_URL}/api/farms/${id}`);
       setFarms(farms.filter((f) => f._id !== id));
     } catch (err) {
       console.error("Gabim gjatë fshirjes së fermës:", err);
@@ -81,19 +78,22 @@ useEffect(() => {
     iconSize: [30, 30],
   });
 
-  const filteredFarms = farms.filter((farm) => {
-    if (!filter || filter.trim() === "") return true;
-    if (!farm.country) return false;
+  // ✅ SIGUROHU QË farms ËSHTË ARRAY PARA FILTER
+  const filteredFarms = Array.isArray(farms) 
+    ? farms.filter((farm) => {
+        if (!filter || filter.trim() === "") return true;
+        if (!farm.country) return false;
 
-    const farmCountry = farm.country.toString().toLowerCase().trim();
-    const farmCountryEnglish = toEnglish(farm.country).toLowerCase().trim();
-    const searchText = filter.toLowerCase().trim();
+        const farmCountry = farm.country.toString().toLowerCase().trim();
+        const farmCountryEnglish = toEnglish(farm.country).toLowerCase().trim();
+        const searchText = filter.toLowerCase().trim();
 
-    return (
-      farmCountry.includes(searchText) ||
-      farmCountryEnglish.includes(searchText)
-    );
-  });
+        return (
+          farmCountry.includes(searchText) ||
+          farmCountryEnglish.includes(searchText)
+        );
+      })
+    : []; // Nëse farms nuk është array, kthe array bosh
 
   return (
     <div className="map-container">
@@ -118,7 +118,8 @@ useEffect(() => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {filteredFarms.map((farm) => (
+        {/* ✅ SIGUROHU QË filteredFarms ËSHTË ARRAY */}
+        {Array.isArray(filteredFarms) && filteredFarms.map((farm) => (
           <Marker
             key={farm._id}
             position={[farm.latitude, farm.longitude]}
@@ -134,17 +135,7 @@ useEffect(() => {
                 🏭 Production: {farm.production} GWh
                 <br />
                 <button className="view-btn"
-                  onClick={() => {
-                    console.log("=== DEBUG BUTTON CLICK ===");
-                    console.log("Farm object:", farm);
-                    console.log("Farm._id:", farm._id);
-                    console.log("Farm._id type:", typeof farm._id);
-                    console.log("Farm._id value:", farm._id);
-                    console.log("========================");
-
-                    navigate(`/farm/${farm._id}`);
-                    
-                  }}
+                  onClick={() => navigate(`/farm/${farm._id}`)}
                 >
                   Shiko Diagramin
                 </button>
