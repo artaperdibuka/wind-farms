@@ -64,7 +64,7 @@ html, body, #root {
 
 .search-input:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: #112950;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
@@ -86,7 +86,7 @@ html, body, #root {
 
 .form-input:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: #5489de;
 }
 
 .form-select {
@@ -102,7 +102,7 @@ html, body, #root {
 
 .form-select:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: #0b1f3f;
 }
 
 .form-icon {
@@ -121,7 +121,7 @@ html, body, #root {
 .icon-industry { color: #8b5cf6; }
 
 .submit-btn {
-  background-color: #3b82f6;
+  background-color: #17386c;
   color: white;
   padding: 12px 24px;
   border: none;
@@ -138,7 +138,7 @@ html, body, #root {
 }
 
 .submit-btn:hover {
-  background-color: #2563eb;
+  background-color: #182f61;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
 }
@@ -180,7 +180,7 @@ html, body, #root {
 
 .map-search-input:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: #8ab1f1;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
@@ -200,7 +200,6 @@ html, body, #root {
 }
 
 .delete-btn {
-  margin-top: 8px;
   background-color: #e74c3c;
   color: white;
   border: none;
@@ -219,6 +218,25 @@ html, body, #root {
   transform: translateY(-1px);
 }
 
+.view-btn {
+  margin-top: 8px;
+  background-color: #2d1288;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.view-btn:hover {
+  background-color: #100d48;
+  transform: translateY(-1px);
+}
 .loading-text {
   text-align: center;
   padding: 20px;
@@ -230,7 +248,7 @@ html, body, #root {
 .app-header {
   text-align: center;
   padding: 2rem 0;
-  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, #10297d 0%, #10297d 100%);
   color: white;
   margin-bottom: 2rem;
   box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
@@ -246,18 +264,6 @@ html, body, #root {
   gap: 1rem;
 }
 
-/* WINDMILL ICON STYLES */
-.windmill-icon {
-  font-size: 3.5rem;
-  color: #ffffff;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
-  display: inline-block;
-}
-
-/* CIRCULAR SPINNING ANIMATION - LIKE A WHEEL */
-.spinning-circular {
-  animation: spinCircular 3s linear infinite;
-}
 
 
 /* MAP CONTAINER STYLES */
@@ -295,11 +301,7 @@ html, body, #root {
 /* Ensure smooth animations */
 
 
-/* Optional hover effect */
-.windmill-icon:hover {
-  filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.4));
-  transition: all 0.3s ease;
-}
+
 /* RESPONSIVE DESIGN - IMPROVED */
 @media (max-width: 1024px) {
   /* iPad dhe tabletë të vegjël */

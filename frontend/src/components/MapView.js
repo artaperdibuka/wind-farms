@@ -5,36 +5,47 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "../styles/style.css";
 import { FaSearch, FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const MapView = () => {
+  const navigate = useNavigate();
   const [farms, setFarms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("");
 
-  // Mapping për të kthyer emrat e shteteve në anglisht nëse janë në shqip
   const countryToEnglish = {
-    'Kosova': 'Kosovo',
-    'Shqipëria': 'Albania', 
-    'Maqedonia e Veriut': 'North Macedonia',
-    'Mali i Zi': 'Montenegro',
-    'Serbia': 'Serbia',
-    'Bosnja dhe Hercegovina': 'Bosnia and Herzegovina',
-    'Kroacia': 'Croatia',
-    'Sllovenia': 'Slovenia',
-    'Bullgaria': 'Bulgaria',
-    'Rumania': 'Romania',
-    'Greqia': 'Greece'
+    Kosova: "Kosovo",
+    Shqipëria: "Albania",
+    "Maqedonia e Veriut": "North Macedonia",
+    "Mali i Zi": "Montenegro",
+    Serbia: "Serbia",
+    "Bosnja dhe Hercegovina": "Bosnia and Herzegovina",
+    Kroacia: "Croatia",
+    Sllovenia: "Slovenia",
+    Bullgaria: "Bulgaria",
+    Rumania: "Romania",
+    Greqia: "Greece",
   };
 
-  // Funksion për të kthyer në anglisht
   const toEnglish = (name) => {
     return countryToEnglish[name] || name;
   };
 
+  // VETËM NJË useEffect - hiq të dytën!
   useEffect(() => {
     const fetchFarms = async () => {
       try {
+        console.log("🔄 Duke marrë fermat nga API...");
         const res = await axios.get("http://localhost:5000/api/farms");
+
+        console.log("✅ Fermat e marra:", res.data.length);
+
+        // SHFAQ ID-TË E VËRTETA
+        console.log("🆔 ID-të e para nga API:");
+        res.data.slice(0, 5).forEach((farm, index) => {
+          console.log(`${index + 1}. ${farm._id} - ${farm.name}`);
+        });
+
         setFarms(res.data);
       } catch (err) {
         console.error("Gabim gjatë marrjes së fermave:", err);
@@ -43,9 +54,10 @@ const MapView = () => {
       }
     };
     fetchFarms();
-  }, []);
+  }, []); // VETËM NJË HERË!
 
-  if (loading) return <div className="loading-text">Po ngarkohen fermat...</div>;
+  if (loading)
+    return <div className="loading-text">Po ngarkohen fermat...</div>;
 
   const deleteFarm = async (id) => {
     if (!window.confirm("A je i sigurt që do të fshish këtë fermë?")) return;
@@ -62,16 +74,18 @@ const MapView = () => {
     iconSize: [30, 30],
   });
 
-  // Filtrimi punon me të dyja gjuhët
   const filteredFarms = farms.filter((farm) => {
-    if (!filter || filter.trim() === '') return true;
+    if (!filter || filter.trim() === "") return true;
     if (!farm.country) return false;
-    
+
     const farmCountry = farm.country.toString().toLowerCase().trim();
     const farmCountryEnglish = toEnglish(farm.country).toLowerCase().trim();
     const searchText = filter.toLowerCase().trim();
-    
-    return farmCountry.includes(searchText) || farmCountryEnglish.includes(searchText);
+
+    return (
+      farmCountry.includes(searchText) ||
+      farmCountryEnglish.includes(searchText)
+    );
   });
 
   return (
@@ -92,7 +106,6 @@ const MapView = () => {
         zoom={7}
         style={{ height: "80vh", width: "100%" }}
       >
-        {/* PËRDOR KËTË TILELAYER PËR EMRA ANGLISHT */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -108,17 +121,32 @@ const MapView = () => {
               <div className="farm-popup">
                 <b>{farm.name}</b>
                 <br />
-                📍 {toEnglish(farm.country)} {/* Shfaq në anglisht */}
-                <br />
-                ⚡ Capacity: {farm.capacity} MW
+                📍 {toEnglish(farm.country)}
+                <br />⚡ Capacity: {farm.capacity} MW
                 <br />
                 🏭 Production: {farm.production} GWh
+                <br />
+                <button className="view-btn"
+                  onClick={() => {
+                    console.log("=== DEBUG BUTTON CLICK ===");
+                    console.log("Farm object:", farm);
+                    console.log("Farm._id:", farm._id);
+                    console.log("Farm._id type:", typeof farm._id);
+                    console.log("Farm._id value:", farm._id);
+                    console.log("========================");
+
+                    navigate(`/farm/${farm._id}`);
+                    
+                  }}
+                >
+                  Shiko Diagramin
+                </button>
                 <br />
                 <button
                   onClick={() => deleteFarm(farm._id)}
                   className="delete-btn"
                 >
-                  <FaTrash /> Delete Farm
+                  <FaTrash /> Fshije Fermën
                 </button>
               </div>
             </Popup>

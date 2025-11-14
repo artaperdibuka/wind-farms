@@ -2,7 +2,7 @@ import fs from "fs";
 import csv from "csv-parser";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import Farm from "./models/Farm.js"; // Sigurohu që shtegu është i saktë
+import Farm from "./models/Farm.js"; 
 
 dotenv.config();
 
@@ -43,16 +43,17 @@ const importFarms = async () => {
           data['Status'] === 'operating' &&
           parseFloat(data['Capacity (MW)']) >= 10) {
         
-        results.push({
-          name: data['Project Name'] || 'Wind Farm',
-          country: data['Country/Area'],
-          latitude: parseFloat(data['Latitude']),
-          longitude: parseFloat(data['Longitude']),
-          capacity: parseFloat(data['Capacity (MW)']),
-          production: parseFloat(data['Capacity (MW)']) * 2.5, // Estimated
-          status: data['Status'],
-          operator: data['Operator'] || ''
-        });
+       results.push({
+  name: data['Project Name'] || 'Wind Farm',
+  country: data['Country/Area'],
+  latitude: parseFloat(data['Latitude']),
+  longitude: parseFloat(data['Longitude']),
+  capacity: parseFloat(data['Capacity (MW)']),
+  production: parseFloat(data['Capacity (MW)']) * 2.5,
+  status: data['Status'],
+  operator: data['Operator'] || ''
+});
+
       }
     })
     .on("end", async () => {
