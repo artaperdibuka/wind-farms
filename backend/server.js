@@ -1,4 +1,3 @@
-// server.js
 import express from "express"; 
 import cors from "cors";
 import dotenv from "dotenv";
@@ -14,19 +13,25 @@ const startServer = async () => {
 
     const app = express();
     
-    // CORS për production
+    // CORS FIX - lejo të gjitha origins për development
     app.use(cors({
-      origin: [
-        'https://your-frontend-app.vercel.app',
-        'http://localhost:3000' // për development
-      ],
+      origin: "*", // Lejo të gjitha domains
+      // Ose specifiko të gjitha domains që do t'i përdorësh:
+      // origin: [
+      //   'https://ballakan-wind-farms.vercel.app',
+      //   'http://localhost:3000',
+      //   'http://localhost:49283',
+      //   'http://127.0.0.1:3000',
+      //   'http://192.168.1.*' // për network access
+      // ],
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
       credentials: true
     }));
     
     app.use(express.json()); 
     app.use("/api/farms", farmRoutes); 
     
-    // Health check route
+    // Health check
     app.get('/health', (req, res) => {
       res.json({ status: 'OK', message: 'Server is running' });
     });
