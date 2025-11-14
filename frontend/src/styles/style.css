@@ -272,7 +272,6 @@ html, body, #root {
   max-width: 1400px; /* Width maksimal */
   margin: 0 auto; /* Qëndrim në mes */
 }
-
 /* Për mobile, redukto pak hapësirën */
 @media (max-width: 768px) {
   .map-container {
@@ -306,16 +305,64 @@ html, body, #root {
 @media (max-width: 1024px) {
   /* iPad dhe tabletë të vegjël */
   .farm-form {
-    gap: 12px;
-    padding: 18px;
+    gap: 6px; /* U zvogëlua nga 8px */
+    padding: 10px; /* U zvogëlua nga 12px */
+    margin-bottom: 12px; /* Shtoi margin-bottom */
   }
   
   .form-group, .form-group-small {
-    min-width: 160px;
+    min-width: 120px; /* U zvogëlua nga 130px */
   }
   
   .app-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .windmill-icon {
     font-size: 2.2rem;
+  }
+  
+  /* Zvogëlimi për tableta - Madhësi të njëjta për input dhe buton */
+  .form-input, .form-select {
+    padding: 8px 10px 8px 35px; /* U zvogëlua padding */
+    font-size: 13px;
+    height: 38px; /* U zvogëlua nga 42px */
+    box-sizing: border-box;
+    text-align: left;
+  }
+  
+  .search-input, .map-search-input {
+    padding: 8px 10px 8px 38px; /* U zvogëlua padding */
+    font-size: 13px;
+    height: 38px; /* U zvogëlua nga 42px */
+    box-sizing: border-box;
+    text-align: left;
+  }
+  
+  .form-icon, .search-icon, .map-search-icon {
+    font-size: 0.75rem;
+    min-height: 24px; /* U zvogëlua nga 26px */
+    min-width: 24px; /* U zvogëlua nga 26px */
+    left: 8px; /* U zvogëlua nga 10px */
+    transform: translateY(-50%);
+  }
+  
+  .submit-btn {
+    padding: 8px 12px; /* U zvogëlua padding */
+    font-size: 13px;
+    height: 38px; /* U zvogëlua nga 42px */
+    box-sizing: border-box;
+  }
+  
+  /* Map search input në mes për tableta */
+  .map-search-container {
+    max-width: 400px;
+    margin: 0 auto 12px auto; /* U zvogëlua margin-bottom */
+    width: 90%;
+  }
+  
+  .map-search-input {
+    width: 100%;
   }
 }
 
@@ -324,8 +371,9 @@ html, body, #root {
   .farm-form {
     flex-direction: column;
     align-items: stretch;
-    gap: 12px;
-    padding: 15px;
+    gap: 5px; /* U zvogëlua nga 8px */
+    padding: 8px; /* U zvogëlua nga 10px */
+    margin-bottom: 10px; /* Shtoi margin-bottom */
   }
   
   .form-group, .form-group-small {
@@ -333,72 +381,130 @@ html, body, #root {
   }
   
   .form-input {
-    width: 100%; /* Rregulloi width nga 70% në 100% */
+    width: 100%;
+    padding: 8px 10px 8px 32px; /* U zvogëlua padding */
+    font-size: 13px;
+    height: 36px; /* U zvogëlua nga 40px */
+    box-sizing: border-box;
+    text-align: left;
+  }
+  
+  .form-select {
+    padding: 8px 10px 8px 32px; /* U zvogëlua padding */
+    font-size: 13px;
+    height: 36px; /* U zvogëlua nga 40px */
+    box-sizing: border-box;
+    text-align: left;
   }
   
   .submit-btn {
     width: 100%;
-    margin-top: 8px;
-    padding: 14px 20px; /* Pak më i madh për touch */
+    margin-top: 4px; /* U zvogëlua nga 5px */
+    padding: 8px 12px; /* U zvogëlua padding */
+    font-size: 13px;
+    height: 36px; /* U zvogëlua nga 40px */
+    box-sizing: border-box;
   }
   
   .search-container {
-    max-width: 100%; /* Ndryshoi nga 50% në 100% */
-    margin: 10px auto;
+    max-width: 100%;
+    margin: 5px auto; /* U zvogëlua nga 6px */
   }
   
   .app-header h1 {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.3rem;
   }
   
   .windmill-icon {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
   }
   
+  /* Map search input në mes për telefon */
   .map-search-container {
-    max-width: 100%;
-    margin: 0 15px 15px 15px;
+    max-width: 350px;
+    margin: 0 auto 10px auto; /* U zvogëlua margin-bottom */
+    width: 90%;
+  }
+  
+  .search-input, .map-search-input {
+    padding: 8px 10px 8px 34px; /* U zvogëlua padding */
+    font-size: 13px;
+    height: 36px; /* U zvogëlua nga 40px */
+    box-sizing: border-box;
+    text-align: left;
+  }
+  
+  .form-icon, .search-icon, .map-search-icon {
+    font-size: 0.7rem;
+    min-height: 22px; /* U zvogëlua nga 24px */
+    min-width: 22px; /* U zvogëlua nga 24px */
+    left: 7px; /* U zvogëlua nga 8px */
+    transform: translateY(-50%);
   }
 }
 
 @media (max-width: 480px) {
   /* Telefonë të vegjël */
   .app-header {
-    padding: 1.5rem 0;
+    padding: 0.8rem 0; /* U zvogëlua nga 1rem */
   }
   
   .app-header h1 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
   
   .windmill-icon {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   
   .farm-form {
-    padding: 12px;
-    gap: 10px;
+    padding: 6px; /* U zvogëlua nga 8px */
+    gap: 4px; /* U zvogëlua nga 6px */
+    margin-bottom: 8px; /* Shtoi margin-bottom */
   }
   
   .form-input, .form-select {
-    padding: 14px 12px 14px 40px; /* Më i madh për touch */
-    font-size: 16px; /* Prevent zoom në iOS */
+    padding: 6px 8px 6px 28px; /* U zvogëlua padding */
+    font-size: 12px;
+    height: 34px; /* U zvogëlua nga 38px */
+    box-sizing: border-box;
+    text-align: left;
   }
   
   .submit-btn {
-    padding: 16px 20px;
-    font-size: 16px;
+    padding: 6px 10px; /* U zvogëlua padding */
+    font-size: 12px;
+    height: 34px; /* U zvogëlua nga 38px */
+    box-sizing: border-box;
+  }
+  
+  /* Map search input në mes për telefonë të vegjël */
+  .map-search-container {
+    max-width: 300px;
+    margin: 0 auto 8px auto; /* U zvogëlua margin-bottom */
+    width: 90%;
   }
   
   .search-input, .map-search-input {
-    padding: 14px 12px 14px 45px;
-    font-size: 16px;
+    padding: 6px 8px 6px 30px; /* U zvogëlua padding */
+    font-size: 12px;
+    height: 34px; /* U zvogëlua nga 38px */
+    box-sizing: border-box;
+    text-align: left;
   }
   
   .leaflet-container {
-    height: 70vh; /* Pak më e vogël për mobile */
+    height: 70vh;
+  }
+  
+  .form-icon, .search-icon, .map-search-icon {
+    font-size: 0.65rem;
+    min-height: 20px; /* U zvogëlua nga 22px */
+    min-width: 20px; /* U zvogëlua nga 22px */
+    left: 6px; /* U zvogëlua nga 7px */
+    transform: translateY(-50%);
   }
 }
 
@@ -406,17 +512,17 @@ html, body, #root {
 @media (hover: none) and (pointer: coarse) {
   /* Për pajisje me touch */
   .submit-btn:hover {
-    transform: none; /* Hiq hover effects në touch */
+    transform: none;
   }
   
   .delete-btn:hover {
     transform: none;
   }
   
-  /* Rrit madhësinë e klikimit për elementet */
+  /* Madhësi më të vogla për touch */
   .form-icon, .search-icon, .map-search-icon {
-    min-height: 44px;
-    min-width: 44px;
+    min-height: 20px; /* U përditësua */
+    min-width: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -426,23 +532,62 @@ html, body, #root {
 /* iOS specific fixes */
 @supports (-webkit-touch-callout: none) {
   .form-input, .form-select, .search-input, .map-search-input {
-    font-size: 16px; /* Prevent zoom në iOS */
+    font-size: 16px;
   }
 }
 
 /* Përmirësime për orientim landscape */
 @media (max-width: 768px) and (orientation: landscape) {
   .leaflet-container {
-    height: 65vh; /* Më e vogël në landscape */
+    height: 60vh;
   }
   
   .farm-form {
-    padding: 10px;
-    gap: 8px;
+    padding: 4px; /* U zvogëlua nga 6px */
+    gap: 3px; /* U zvogëlua nga 4px */
+    margin-bottom: 6px; /* Shtoi margin-bottom */
   }
   
   .app-header {
-    padding: 1rem 0;
-    margin-bottom: 1rem;
+    padding: 0.5rem 0; /* U zvogëlua nga 0.6rem */
+    margin-bottom: 0.5rem; /* U zvogëlua nga 0.6rem */
+  }
+  
+  .form-input, .form-select {
+    padding: 5px 6px 5px 24px; /* U zvogëlua padding */
+    font-size: 11px;
+    height: 32px; /* U zvogëlua nga 36px */
+    box-sizing: border-box;
+    text-align: left;
+  }
+  
+  /* Map search input në mes për landscape */
+  .map-search-container {
+    max-width: 280px;
+    margin: 0 auto 6px auto; /* U zvogëlua margin-bottom */
+    width: 90%;
+  }
+  
+  .search-input, .map-search-input {
+    padding: 5px 6px 5px 26px; /* U zvogëlua padding */
+    font-size: 11px;
+    height: 32px; /* U zvogëlua nga 36px */
+    box-sizing: border-box;
+    text-align: left;
+  }
+  
+  .submit-btn {
+    padding: 5px 8px; /* U zvogëlua padding */
+    font-size: 11px;
+    height: 32px; /* U zvogëlua nga 36px */
+    box-sizing: border-box;
+  }
+  
+  .form-icon, .search-icon, .map-search-icon {
+    font-size: 0.6rem;
+    min-height: 18px; /* U zvogëlua nga 20px */
+    min-width: 18px; /* U zvogëlua nga 20px */
+    left: 5px; /* U zvogëlua nga 6px */
+    transform: translateY(-50%);
   }
 }
