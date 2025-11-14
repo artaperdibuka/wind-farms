@@ -10,6 +10,6 @@ const app = express();
  app.use(cors()); 
  app.use(express.json()); 
  app.use("/api/farms", farmRoutes); 
- app.listen(10000, () => console.log("Server running on port 10000"));
+ app.listen(5000, () => console.log("Server running on port 5000"));
 
 
