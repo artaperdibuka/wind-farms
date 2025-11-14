@@ -1,3 +1,4 @@
+// server.js
 import express from "express"; 
 import cors from "cors";
 import dotenv from "dotenv";
@@ -8,16 +9,30 @@ dotenv.config();
 
 const startServer = async () => {
   try {
-    // Prij të lidhet me MongoDB para se të nisim serverin
     await connectDB();
     console.log("✅ MongoDB connected successfully");
 
     const app = express();
-    app.use(cors()); 
+    
+    // CORS për production
+    app.use(cors({
+      origin: [
+        'https://your-frontend-app.vercel.app',
+        'http://localhost:3000' // për development
+      ],
+      credentials: true
+    }));
+    
     app.use(express.json()); 
     app.use("/api/farms", farmRoutes); 
     
-    app.listen(5000, () => console.log("🚀 Server running on port 5000"));
+    // Health check route
+    app.get('/health', (req, res) => {
+      res.json({ status: 'OK', message: 'Server is running' });
+    });
+    
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
     
   } catch (error) {
     console.error("❌ Failed to start server:", error);

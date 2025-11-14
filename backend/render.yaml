@@ -1,0 +1,13 @@
+# render.yaml
+services:
+  - type: web
+    name: wind-farms-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: MONGO_URI
+        value: your_mongodb_connection_string
+      - key: NODE_ENV
+        value: production
