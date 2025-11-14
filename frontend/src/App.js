@@ -16,15 +16,15 @@ function App() {
         </div>
 
         <Routes>
-          {/* Faqja kryesore me Map dhe Form */}
-          <Route
-            path="/"
+          {/* Faqja kryesore vetëm me MapView */}
+          <Route 
+            path="/" 
             element={
-              <>
+              <div>
                 <AddFarmForm onAdd={() => setRefresh(!refresh)} />
                 <MapView key={refresh} />
-              </>
-            }
+              </div>
+            } 
           />
 
           {/* Faqja e detajeve të fermës */}
