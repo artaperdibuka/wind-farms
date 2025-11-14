@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
+import API_BASE_URL from "../config/api"; 
 
 
 function FarmDetails() {
@@ -19,7 +20,7 @@ function FarmDetails() {
         setError(null);
         console.log("🔍 Duke kërkuar fermën me ID:", id);
         
-        const res = await axios.get(`http://localhost:5000/api/farms/${id}`);
+         const res = await axios.get(`${API_BASE_URL}/api/farms/${id}`);
         console.log("✅ Farm e gjetur:", res.data);
         
         setFarm(res.data);

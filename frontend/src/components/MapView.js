@@ -6,6 +6,7 @@ import "leaflet/dist/leaflet.css";
 import "../styles/style.css";
 import { FaSearch, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from '../config/api';
 
 const MapView = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const MapView = () => {
     const fetchFarms = async () => {
       try {
         console.log("🔄 Duke marrë fermat nga API...");
-        const res = await axios.get("http://localhost:5000/api/farms");
+        const res = await axios.get(`${API_BASE_URL}/api/farms`);
 
         console.log("✅ Fermat e marra:", res.data.length);
 
