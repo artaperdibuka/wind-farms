@@ -72,18 +72,29 @@
 }
 
 /* Media queries for responsiveness */
-/* Stilet bazë për copyright */
+/* FarmDetails.css */
+
+.farm-details-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Stilet ekzistuese për FarmDetails... */
+
+/* Copyright Footer për FarmDetails */
 .copyright-footer {
   text-align: center;
   padding: 15px;
-  background-color: #f8f9fa;
-  border-top: 1px solid #e9ecef;
-  color: #6c757d;
   font-size: 14px;
-  margin-top: auto; /* Siguron që copyright të qëndrojë në fund */
+  margin-top: auto;
+  width: 100%;
 }
 
-/* Media queries për copyright */
+/* Media queries për copyright në FarmDetails */
 @media screen and (max-width: 768px) {
   .copyright-footer {
     padding: 12px;
@@ -116,21 +127,6 @@
   .copyright-footer {
     padding: 20px;
     font-size: 15px;
-  }
-}
-
-/* Për orientim portrait në mobile */
-@media screen and (max-width: 768px) and (orientation: portrait) {
-  .copyright-footer {
-    background-color: #f0f0f0;
-  }
-}
-
-/* Për orientim landscape në mobile */
-@media screen and (max-width: 768px) and (orientation: landscape) {
-  .copyright-footer {
-    padding: 8px;
-    font-size: 12px;
   }
 }
 
