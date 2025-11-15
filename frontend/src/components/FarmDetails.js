@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
 import API_BASE_URL from "../config/api"; 
-import "../styles/FarmDetails.css"; // Import CSS file
+import "../styles/FarmDetails.css";
 
 function FarmDetails() {
   const { id } = useParams();
@@ -39,16 +39,14 @@ function FarmDetails() {
   if (error) return <div className="error">{error}</div>;
   if (!farm) return <div className="error">Ferma nuk u gjet.</div>;
 
-  // Siguro që production të jetë numër valid
   const productionValue = !isNaN(farm.production) ? farm.production : 0;
-  const capacityValue = !isNaN(farm.capacity) ? farm.capacity : 10; // default 10 MW
+  const capacityValue = !isNaN(farm.capacity) ? farm.capacity : 10;
 
-  // Gjenerim të dhënash testuese për 24 orë nëse nuk ka productionHistory
   const productionData = farm.productionHistory && farm.productionHistory.length > 0
     ? farm.productionHistory
     : Array.from({ length: 24 }, (_, i) => ({
         hour: `${i + 1}`,
-        power: Math.round(productionValue / 24 + Math.random() * (capacityValue / 10)) // aproksim
+        power: Math.round(productionValue / 24 + Math.random() * (capacityValue / 10))
       }));
 
   return (
@@ -72,28 +70,33 @@ function FarmDetails() {
       </div>
 
       <div className="chart-section">
-        <h3>Grafiku i Prodhimit (24 orë aproksim)</h3>
+        <h3>Grafiku i Prodhimit (24 orë)</h3>
         <div className="chart-container">
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={productionData}>
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart 
+              data={productionData}
+              margin={{ top: 10, right: 10, left: 0, bottom: 30 }}
+            >
               <XAxis 
                 dataKey="hour" 
-                label={{ value: 'Ora', position: 'insideBottomRight', offset: -5 }} 
-                tick={{ fontSize: 12 }}
+                tick={{ fontSize: 10 }}
+                interval={3}
+                label={{ value: 'Ora', position: 'insideBottomRight', offset: -5 }}
               />
               <YAxis 
-                label={{ value: 'MW', angle: -90, position: 'insideLeft' }} 
-                tick={{ fontSize: 12 }}
+                tick={{ fontSize: 10 }}
+                width={35}
+                label={{ value: 'MW', angle: -90, position: 'insideLeft' }}
               />
               <Tooltip />
-              <CartesianGrid stroke="#f0f0f0" strokeDasharray="5 5" />
+              <CartesianGrid stroke="#f0f0f0" strokeDasharray="3 3" />
               <Line 
                 type="monotone" 
                 dataKey="power" 
                 stroke="#8884d8" 
                 strokeWidth={2} 
-                dot={{ r: 3 }} 
-                activeDot={{ r: 6 }}
+                dot={{ r: 2 }}
+                activeDot={{ r: 4 }}
               />
             </LineChart>
           </ResponsiveContainer>
