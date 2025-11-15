@@ -44,7 +44,7 @@ const MapView = () => {
         
         // KONTROLLO NËSE ËSHTË ARRAY PARA SE TË VË NË STATE
         if (Array.isArray(res.data)) {
-          console.log("✅ Fermat e marra:", res.data.length);
+          console.log("✅ Fermat e marru:", res.data.length);
           setFarms(res.data);
         } else {
           console.error("❌ Response nuk është array:", res.data);
@@ -108,49 +108,55 @@ const MapView = () => {
         />
       </div>
 
-      <MapContainer
-        center={[42.5, 20.9]}
-        zoom={7}
-        style={{ height: "80vh", width: "100%" }}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+      <div className="map-content">
+        <MapContainer
+          center={[42.5, 20.9]}
+          zoom={7}
+          style={{ height: "80vh", width: "100%" }}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
 
-        {/* ✅ SIGUROHU QË filteredFarms ËSHTË ARRAY */}
-        {Array.isArray(filteredFarms) && filteredFarms.map((farm) => (
-          <Marker
-            key={farm._id}
-            position={[farm.latitude, farm.longitude]}
-            icon={icon}
-          >
-            <Popup>
-              <div className="farm-popup">
-                <b>{farm.name}</b>
-                <br />
-                📍 {toEnglish(farm.country)}
-                <br />⚡ Capacity: {farm.capacity} MW
-                <br />
-                🏭 Production: {farm.production} GWh
-                <br />
-                <button className="view-btn"
-                  onClick={() => navigate(`/farm/${farm._id}`)}
-                >
-                  Shiko Diagramin
-                </button>
-                <br />
-                <button
-                  onClick={() => deleteFarm(farm._id)}
-                  className="delete-btn"
-                >
-                  <FaTrash /> Fshije Fermën
-                </button>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
+          {/* ✅ SIGUROHU QË filteredFarms ËSHTË ARRAY */}
+          {Array.isArray(filteredFarms) && filteredFarms.map((farm) => (
+            <Marker
+              key={farm._id}
+              position={[farm.latitude, farm.longitude]}
+              icon={icon}
+            >
+              <Popup>
+                <div className="farm-popup">
+                  <b>{farm.name}</b>
+                  <br />
+                  📍 {toEnglish(farm.country)}
+                  <br />⚡ Capacity: {farm.capacity} MW
+                  <br />
+                  🏭 Production: {farm.production} GWh
+                  <br />
+                  <button className="view-btn"
+                    onClick={() => navigate(`/farm/${farm._id}`)}
+                  >
+                    Shiko Diagramin
+                  </button>
+                  <br />
+                  <button
+                    onClick={() => deleteFarm(farm._id)}
+                    className="delete-btn"
+                  >
+                    <FaTrash /> Fshije Fermën
+                  </button>
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+        </MapContainer>
+      </div>
+
+      <div className="copyright-footer">
+        <p>© {new Date().getFullYear()} artaperdibuka dhe hartes. Të gjitha të drejtat e rezervuara.</p>
+      </div>
     </div>
   );
 };
