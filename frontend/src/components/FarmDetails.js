@@ -35,9 +35,32 @@ function FarmDetails() {
     fetchFarm();
   }, [id]);
 
-  if (loading) return <div className="loading">Po ngarkohen të dhënat e fermës...</div>;
-  if (error) return <div className="error">{error}</div>;
-  if (!farm) return <div className="error">Ferma nuk u gjet.</div>;
+  if (loading) return (
+    <div className="farm-details-container">
+      <div className="loading">Po ngarkohen të dhënat e fermës...</div>
+      <div className="copyright-footer">
+        <p>© 2025 All rights reserved to Arta Përdibuka.</p>
+      </div>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="farm-details-container">
+      <div className="error">{error}</div>
+      <div className="copyright-footer">
+        <p>© 2025 All rights reserved to Arta Përdibuka.</p>
+      </div>
+    </div>
+  );
+  
+  if (!farm) return (
+    <div className="farm-details-container">
+      <div className="error">Ferma nuk u gjet.</div>
+      <div className="copyright-footer">
+        <p>© 2025 All rights reserved to Arta Përdibuka.</p>
+      </div>
+    </div>
+  );
 
   const productionValue = !isNaN(farm.production) ? farm.production : 0;
   const capacityValue = !isNaN(farm.capacity) ? farm.capacity : 10;
@@ -101,6 +124,11 @@ function FarmDetails() {
             </LineChart>
           </ResponsiveContainer>
         </div>
+      </div>
+
+      {/* COPYRIGHT FOOTER */}
+      <div className="copyright-footer">
+        <p>© 2025 All rights reserved to Arta Përdibuka.</p>
       </div>
     </div>
   );

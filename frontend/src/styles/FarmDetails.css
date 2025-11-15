@@ -72,6 +72,66 @@
 }
 
 /* Media queries for responsiveness */
+/* FarmDetails.css */
+
+.farm-details-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Stilet ekzistuese për FarmDetails... */
+
+/* Copyright Footer për FarmDetails */
+.copyright-footer {
+  text-align: center;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  color: #6c757d;
+  font-size: 14px;
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Media queries për copyright në FarmDetails */
+@media screen and (max-width: 768px) {
+  .copyright-footer {
+    padding: 12px;
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .copyright-footer {
+    padding: 10px;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  
+  .copyright-footer p {
+    margin: 0;
+    padding: 0 10px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .copyright-footer {
+    font-size: 11px;
+    padding: 8px 5px;
+  }
+}
+
+/* Për ekrane shumë të mëdha */
+@media screen and (min-width: 1200px) {
+  .copyright-footer {
+    padding: 20px;
+    font-size: 15px;
+  }
+}
 
 /* For small phones - GRAFIKU MË I VOGËL */
 @media (max-width: 480px) {

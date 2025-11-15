@@ -155,7 +155,7 @@ const MapView = () => {
       </div>
 
       <div className="copyright-footer">
-        <p>© {new Date().getFullYear()} artaperdibuka dhe hartes. Të gjitha të drejtat e rezervuara.</p>
+        <p>© 2025 All rights reserved to Arta Përdibuka.</p>
       </div>
     </div>
   );
