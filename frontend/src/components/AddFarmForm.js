@@ -22,9 +22,9 @@ const AddFarmForm = ({ onAdd }) => {
     production: "",
   });
 
-  // LISTA E PLOTË E SHTETEVE TË BALKANIT
+  // FULL LIST OF BALKAN COUNTRIES
   const balkanCountries = [
-    "Zgjidhni shtetin...",
+    "Select a country...",
     "Kosovo",
     "Albania",
     "North Macedonia",
@@ -45,12 +45,12 @@ const AddFarmForm = ({ onAdd }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (form.country === "" || form.country === "Zgjidhni shtetin...") {
-      return toast.error("Ju lutemi zgjidhni një shtet!");
+    if (form.country === "" || form.country === "Select a country...") {
+      return toast.error("Please select a country!");
     }
     
-    if (form.latitude < -90 || form.latitude > 90) return toast.error("Latitude duhet të jetë midis -90 dhe 90");
-    if (form.longitude < -180 || form.longitude > 180) return toast.error("Longitude duhet të jetë midis -180 dhe 180");
+    if (form.latitude < -90 || form.latitude > 90) return toast.error("Latitude must be between -90 and 90");
+    if (form.longitude < -180 || form.longitude > 180) return toast.error("Longitude must be between -180 and 180");
 
     try {
       const res = await axios.post("http://localhost:5000/api/farms", {
@@ -61,7 +61,7 @@ const AddFarmForm = ({ onAdd }) => {
         production: parseFloat(form.production),
       });
       onAdd(res.data);
-      toast.success("Ferma u shtua me sukses!");
+      toast.success("Farm added successfully!");
       setForm({
         name: "",
         country: "",
@@ -72,28 +72,28 @@ const AddFarmForm = ({ onAdd }) => {
       });
     } catch (err) {
       console.error("Error adding farm:", err.response?.data || err.message);
-      toast.error("Gabim gjatë shtimit të fermës");
+      toast.error("Error while adding farm");
     }
   };
 
   return (
     <div className="form-container">
-      {/* Forma në një rresht - NË MES */}
+      {/* Single-row form - CENTERED */}
       <form onSubmit={handleSubmit} className="farm-form">
-        {/* Emri i Fermës */}
+        {/* Farm Name */}
         <div className="form-group">
           <FaWind className="form-icon icon-wind" />
           <input 
             name="name" 
             value={form.name} 
             onChange={handleChange} 
-            placeholder="Emri i fermës" 
+            placeholder="Farm Name" 
             required 
             className="form-input"
           />
         </div>
 
-        {/* Shteti */}
+        {/* Country */}
         <div className="form-group">
           <FaGlobeEurope className="form-icon icon-globe" />
           <select 
@@ -104,7 +104,7 @@ const AddFarmForm = ({ onAdd }) => {
             className="form-select"
           >
             {balkanCountries.map((country, index) => (
-              <option key={index} value={country === "Zgjidhni shtetin..." ? "" : country}>
+              <option key={index} value={country === "Select a country..." ? "" : country}>
                 {country}
               </option>
             ))}
@@ -141,7 +141,7 @@ const AddFarmForm = ({ onAdd }) => {
           />
         </div>
 
-        {/* Kapaciteti */}
+        {/* Capacity */}
         <div className="form-group form-group-small">
           <FaBolt className="form-icon icon-bolt" />
           <input 
@@ -149,13 +149,13 @@ const AddFarmForm = ({ onAdd }) => {
             type="number" 
             value={form.capacity} 
             onChange={handleChange} 
-            placeholder="Kapacitet (MW)" 
+            placeholder="Capacity (MW)" 
             required 
             className="form-input"
           />
         </div>
 
-        {/* Prodhim */}
+        {/* Production */}
         <div className="form-group form-group-small">
           <FaIndustry className="form-icon icon-industry" />
           <input 
@@ -163,19 +163,18 @@ const AddFarmForm = ({ onAdd }) => {
             type="number" 
             value={form.production} 
             onChange={handleChange} 
-            placeholder="Prodhim (GWh)" 
+            placeholder="Production (GWh)" 
             required 
             className="form-input"
           />
         </div>
 
-        {/* Butoni Shto */}
+        {/* Add Button */}
         <button type="submit" className="submit-btn">
           <FaPlus />
-          Shto Fermë
+          Add Farm
         </button>
       </form>
-
     </div>
   );
 };

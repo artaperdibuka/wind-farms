@@ -14,6 +14,7 @@ const MapView = () => {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("");
 
+  // Mapping countries to English
   const countryToEnglish = {
     Kosova: "Kosovo",
     Shqipëria: "Albania",
@@ -35,24 +36,24 @@ const MapView = () => {
   useEffect(() => {
     const fetchFarms = async () => {
       try {
-        console.log("🔄 Duke marrë fermat nga API...");
+        console.log("🔄 Fetching farms from API...");
         const apiUrl = `${API_BASE_URL}/api/farms`;
-        console.log("🌐 URL e përdorur:", apiUrl);
+        console.log("🌐 API URL:", apiUrl);
         
         const res = await axios.get(apiUrl);
         console.log("📊 Response data type:", typeof res.data);
         
-        // KONTROLLO NËSE ËSHTË ARRAY PARA SE TË VË NË STATE
+        // CHECK IF RESPONSE IS AN ARRAY BEFORE SETTING STATE
         if (Array.isArray(res.data)) {
-          console.log("✅ Fermat e marru:", res.data.length);
+          console.log("✅ Farms fetched:", res.data.length);
           setFarms(res.data);
         } else {
-          console.error("❌ Response nuk është array:", res.data);
-          setFarms([]); // Vendos array bosh nëse nuk është array
+          console.error("❌ Response is not an array:", res.data);
+          setFarms([]); // Set empty array if not an array
         }
       } catch (err) {
-        console.error("❌ Gabim gjatë marrjes së fermave:", err);
-        setFarms([]); // Vendos array bosh në rast errori
+        console.error("❌ Error fetching farms:", err);
+        setFarms([]); // Set empty array on error
       } finally {
         setLoading(false);
       }
@@ -60,16 +61,15 @@ const MapView = () => {
     fetchFarms();
   }, []);
 
-  if (loading) return <div className="loading-text">Po ngarkohen fermat...</div>;
+  if (loading) return <div className="loading-text">Loading farms...</div>;
 
   const deleteFarm = async (id) => {
-    if (!window.confirm("A je i sigurt që do të fshish këtë fermë?")) return;
+    if (!window.confirm("Are you sure you want to delete this farm?")) return;
     try {
-      // ✅ KORREKT - përdor API_BASE_URL
       await axios.delete(`${API_BASE_URL}/api/farms/${id}`);
       setFarms(farms.filter((f) => f._id !== id));
     } catch (err) {
-      console.error("Gabim gjatë fshirjes së fermës:", err);
+      console.error("Error deleting farm:", err);
     }
   };
 
@@ -78,7 +78,7 @@ const MapView = () => {
     iconSize: [30, 30],
   });
 
-  // ✅ SIGUROHU QË farms ËSHTË ARRAY PARA FILTER
+  // ENSURE farms IS AN ARRAY BEFORE FILTERING
   const filteredFarms = Array.isArray(farms) 
     ? farms.filter((farm) => {
         if (!filter || filter.trim() === "") return true;
@@ -93,7 +93,7 @@ const MapView = () => {
           farmCountryEnglish.includes(searchText)
         );
       })
-    : []; // Nëse farms nuk është array, kthe array bosh
+    : []; // Return empty array if farms is not an array
 
   return (
     <div className="map-container">
@@ -101,7 +101,7 @@ const MapView = () => {
         <FaSearch className="map-search-icon" />
         <input
           type="text"
-          placeholder="Kërko fermat sipas shteteve (Kosovo, Albania, etc)..."
+          placeholder="Search farms by country (Kosovo, Albania, etc)..."
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           className="map-search-input"
@@ -119,7 +119,7 @@ const MapView = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          {/* ✅ SIGUROHU QË filteredFarms ËSHTË ARRAY */}
+          {/* ENSURE filteredFarms IS AN ARRAY */}
           {Array.isArray(filteredFarms) && filteredFarms.map((farm) => (
             <Marker
               key={farm._id}
@@ -138,14 +138,14 @@ const MapView = () => {
                   <button className="view-btn"
                     onClick={() => navigate(`/farm/${farm._id}`)}
                   >
-                    Shiko Diagramin
+                    View Chart
                   </button>
                   <br />
                   <button
                     onClick={() => deleteFarm(farm._id)}
                     className="delete-btn"
                   >
-                    <FaTrash /> Fshije Fermën
+                    <FaTrash /> Delete Farm
                   </button>
                 </div>
               </Popup>
