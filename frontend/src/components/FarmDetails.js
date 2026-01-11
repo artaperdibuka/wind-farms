@@ -12,21 +12,21 @@ function FarmDetails() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log("🆔 FarmDetails - ID nga URL:", id);
+    console.log("🆔 FarmDetails - ID from URL:", id);
     
     const fetchFarm = async () => {
       try {
         setLoading(true);
         setError(null);
-        console.log("🔍 Duke kërkuar fermën me ID:", id);
+        console.log("🔍 Fetching farm with ID:", id);
         
         const res = await axios.get(`${API_BASE_URL}/api/farms/${id}`);
-        console.log("✅ Farm e gjetur:", res.data);
+        console.log("✅ Farm found:", res.data);
         
         setFarm(res.data);
       } catch (err) {
-        console.error("❌ Gabim gjatë marrjes së fermës:", err);
-        setError(`Ferma me ID ${id} nuk u gjet.`);
+        console.error("❌ Error fetching farm:", err);
+        setError(`Farm with ID ${id} was not found.`);
       } finally {
         setLoading(false);
       }
@@ -37,7 +37,7 @@ function FarmDetails() {
 
   if (loading) return (
     <div className="farm-details-container">
-      <div className="loading">Po ngarkohen të dhënat e fermës...</div>
+      <div className="loading">Loading farm data...</div>
       <div className="copyright-footer">
         <p>© 2025 All rights reserved to Arta Përdibuka.</p>
       </div>
@@ -55,7 +55,7 @@ function FarmDetails() {
   
   if (!farm) return (
     <div className="farm-details-container">
-      <div className="error">Ferma nuk u gjet.</div>
+      <div className="error">Farm not found.</div>
       <div className="copyright-footer">
         <p>© 2025 All rights reserved to Arta Përdibuka.</p>
       </div>
@@ -75,25 +75,25 @@ function FarmDetails() {
   return (
     <div className="farm-details-container">
       <div className="farm-header">
-        <h2>Detajet e Fermës: {farm.name}</h2>
+        <h2>Farm Details: {farm.name}</h2>
         <div className="farm-info-grid">
           <div className="info-item">
-            <span className="info-label">📍 Shteti:</span>
+            <span className="info-label">📍 Country:</span>
             <span className="info-value">{farm.country}</span>
           </div>
           <div className="info-item">
-            <span className="info-label">⚡ Kapaciteti:</span>
+            <span className="info-label">⚡ Capacity:</span>
             <span className="info-value">{capacityValue} MW</span>
           </div>
           <div className="info-item">
-            <span className="info-label">🏭 Prodhimi total:</span>
+            <span className="info-label">🏭 Total Production:</span>
             <span className="info-value">{productionValue} GWh</span>
           </div>
         </div>
       </div>
 
       <div className="chart-section">
-        <h3>Grafiku i Prodhimit (24 orë)</h3>
+        <h3>Production Chart (24 Hours)</h3>
         <div className="chart-container">
           <ResponsiveContainer width="100%" height={250}>
             <LineChart 
@@ -104,7 +104,7 @@ function FarmDetails() {
                 dataKey="hour" 
                 tick={{ fontSize: 10 }}
                 interval={3}
-                label={{ value: 'Ora', position: 'insideBottomRight', offset: -5 }}
+                label={{ value: 'Hour', position: 'insideBottomRight', offset: -5 }}
               />
               <YAxis 
                 tick={{ fontSize: 10 }}
