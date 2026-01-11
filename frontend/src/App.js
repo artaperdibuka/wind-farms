@@ -12,11 +12,11 @@ function App() {
     <Router>
       <div className="App">
         <div className="app-header">
-          <h1>GIS - Fermat e Erës në Ballkan</h1>
+          <h1>GIS - Wind Farms in the Balkans</h1>
         </div>
 
         <Routes>
-          {/* Faqja kryesore vetëm me MapView */}
+          {/* Main page with MapView only */}
           <Route 
             path="/" 
             element={
@@ -27,7 +27,7 @@ function App() {
             } 
           />
 
-          {/* Faqja e detajeve të fermës */}
+          {/* Farm details page */}
           <Route path="/farm/:id" element={<FarmDetails />} />
         </Routes>
       </div>
